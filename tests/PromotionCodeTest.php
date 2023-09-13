@@ -7,7 +7,7 @@ final class PromotionCodeTest extends TestCase
     {
         $this->assertInstanceOf(
             PromotionCode::class,
-            PromotionCode::fromString('A12345')
+            PromotionCode::fromString('A12345Z')
         );
     }
 

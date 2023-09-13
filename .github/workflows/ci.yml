@@ -31,7 +31,5 @@ jobs:
       - name: Install Project Dependencies
         run: composer install  
 
-
-
       - name: Run PHP-CS-Fixer
         run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
