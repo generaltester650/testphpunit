@@ -1,22 +1,15 @@
-name: PHPUnit Tests
+name: CI
 
 on: [push]
 
 jobs:
   build-test:
-    name: PHPUnit Tests
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - uses: php-actions/composer@v6 # or alternative dependency management
+    - uses: php-actions/phpunit@v3
 
-      - uses: php-actions/composer@v6
-        with:
-          php_extensions: mailparse pdo_mysql
-          dev: no
-          args: --profile --ignore-platform-reqs
-
-      - name: Composer Install
-        run: composer install
-
-      - name: Run PHP-CS-Fixer
-        run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
+    - name: Run PHP-CS-Fixer
+      run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
