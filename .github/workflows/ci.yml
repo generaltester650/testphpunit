@@ -15,10 +15,7 @@ jobs:
           dev: no
           args: --profile --ignore-platform-reqs
 
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@v3
-        with:
-          php_version: 8.1
+
 
       - name: Run PHP-CS-Fixer
         run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
