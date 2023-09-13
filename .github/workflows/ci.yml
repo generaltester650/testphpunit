@@ -19,10 +19,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Composer Install
-        uses: php-actions/composer@v6
+        uses: actions/checkout@v3      
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -31,6 +28,9 @@ jobs:
           extensions: none, iconv, json, phar, tokenizer
           coverage: none
           tools: none
+
+      - name: Composer Install
+        uses: php-actions/composer@v6
 
       - name: Install PHPunit
         run: php composer update
