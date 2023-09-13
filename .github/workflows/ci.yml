@@ -24,7 +24,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.1.2
           tools: composer:v2
           coverage: none
 
@@ -34,4 +34,5 @@ jobs:
       - name: Install PHP Unit
         uses: php-actions/phpunit@v3
 
-     
+      - name: Run PHP-CS-Fixer
+        run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
