@@ -1,36 +1,24 @@
-# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
+name: PHPUnit Tests
 
-on:
-  - push
-
-name: CI
-
-env:
-  COMPOSER_ROOT_VERSION: "10.4-dev"
-
-permissions:
-  contents: read
+on: [push]
 
 jobs:
-  coding-guidelines:
-    name: Coding Guidelines
-
+  build-test:
+    name: PHPUnit Tests
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3      
+      - uses: actions/checkout@v2
 
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
+      - uses: php-actions/composer@v6
         with:
-          php-version: 7.3
-          extensions: none, iconv, json, phar, tokenizer
-          coverage: none
-          tools: none
+          php_extensions: mailparse pdo_mysql
+          dev: no
+          args: --profile --ignore-platform-reqs
 
-      - name: Install dependencies
-        uses: php-actions/composer@v5
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@v3
+        with:
+          php_version: 8.1
 
       - name: Run PHP-CS-Fixer
         run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
