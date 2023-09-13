@@ -21,6 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Composer Install
+        uses: php-actions/composer@v6
+
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -28,7 +31,9 @@ jobs:
           extensions: none, iconv, json, phar, tokenizer
           coverage: none
           tools: none
+          
       - name: Install PHPunit
-        run: php composer.phar install
+        run: php composer install
+
       - name: Run PHP-CS-Fixer
         run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
