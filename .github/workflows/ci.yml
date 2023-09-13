@@ -34,5 +34,4 @@ jobs:
       - name: Install PHP Unit
         uses: php-actions/phpunit@v3
 
-      - name: Run PHP-CS-Fixer
-        run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
+     
