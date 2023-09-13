@@ -28,6 +28,7 @@ jobs:
           extensions: none, iconv, json, phar, tokenizer
           coverage: none
           tools: none
-
+      - name: Install PHPunit
+        run: php composer.phar install
       - name: Run PHP-CS-Fixer
         run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
