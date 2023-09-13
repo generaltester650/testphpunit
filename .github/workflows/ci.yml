@@ -1,22 +1,33 @@
-image: php:8.0.12-cli
+# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
 
-cache:
-  paths:
-    - vendor/
+on:
+  - push
 
-before_script:
-  - test -d vendor || apt-get update -yqq
-  - test -d vendor || apt-get install -yqq curl git libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev libonig-dev libzip-dev
-  - test -d vendor || docker-php-ext-install mbstring pdo_pgsql curl intl gd xml zip bz2
-  - test -d vendor || curl -sS https://getcomposer.org/installer | php
-  - test -d vendor || php composer.phar install
+name: CI
 
-test:
-  script:
-   - vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
-  allow_failure: true
-  artifacts:
-    when: always
-    reports:
-      junit: phpunit-report.xml
-  
+env:
+  COMPOSER_ROOT_VERSION: "10.4-dev"
+
+permissions:
+  contents: read
+
+jobs:
+  coding-guidelines:
+    name: Coding Guidelines
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: none, iconv, json, phar, tokenizer
+          coverage: none
+          tools: none
+
+      - name: Run PHP-CS-Fixer
+        run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
