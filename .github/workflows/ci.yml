@@ -24,14 +24,14 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.1
+          php-version: 7.2
           extensions: none, iconv, json, phar, tokenizer
           coverage: none
           tools: none
 
 
       - name: Install Composer
-        uses: php-actions/composer@v6
+        uses: php-actions/composer@v5
 
       - name: Run PHP-CS-Fixer
         run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
