@@ -29,11 +29,13 @@ jobs:
           coverage: none
           tools: none
 
+      
+      - name: Update composer
+        run: composer update
+
+
       - name: Install dependencies
         uses: php-actions/composer@v6
-      
-      - name: Composer Update
-        run: composer update
 
       - name: Run PHP-CS-Fixer
         run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
