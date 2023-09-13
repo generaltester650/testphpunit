@@ -21,22 +21,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
-          extensions: none, iconv, json, phar, tokenizer
+          tools: composer:v2
           coverage: none
-          tools: none
 
-
-      - name: Cache composer dependencies
-        uses: actions/cache@v2
-        with:
-          path: ./vendor
-          key: composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            composer-
+      - name: Install Project Dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
       - name: Run PHP-CS-Fixer
         run: vendor/bin/phpunit --bootstrap src/autoload.php --colors=never --log-junit phpunit-report.xml tests
